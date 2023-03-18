@@ -417,3 +417,115 @@ FORGOT PASSWORD
   display: block;
   text-align: center;
 }
+
+/* ----------------------
+FORGOT PASSWORD VERIFICATION
+-------------------------- */
+
+.verify--password {
+  width: 100%;
+  height: 100vh;
+  background: url("./images/forgotpasswordverification.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.verify--password--overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background: rgba(4, 16, 10, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.verify--password--overlay p {
+  font-style: italic;
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  color: var(--secondary--color);
+}
+
+/* ----------------------
+EMAIL VERIFICATION SUCCESSFUL
+-------------------------- */
+
+.email--verification--success {
+  width: 100%;
+  height: 100vh;
+  background: url("./images/emailverificationsuccessful.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.email--verification--success--overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background: rgba(4, 16, 10, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.email--verification--success--overlay p {
+  font-style: italic;
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  color: var(--secondary--color);
+}
+
+/* ----------------------
+USER HOMEPAGE
+-------------------------- */
+.user--home--page {
+  width: 100%;
+  height: 100vh;
+  background: rgba(4, 16, 10, 0.9);
+}
+.top--part {
+  max-width: 1200px;
+  padding: 1.5rem 1rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+.user--name {
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+.logout--btn {
+  padding: 0.75rem 1.25rem;
+  color: #ffffff;
+  background: rgba(141, 255, 205, 0.4);
+  letter-spacing: 1.25px;
+}
+.inpos--box {
+  max-width: 1200px;
+  padding: 1.5rem 1rem;
+  margin: 0 auto;
+}
+.user--inspo {
+  text-transform: uppercase;
+  font-size: 1.75rem;
+  color: var(--secondary--color);
+  font-weight: 700;
+  margin: 0 0 2rem 0;
+}
+.inspo--message {
+  text-transform: uppercase;
+  font-size: 1.75rem;
+  color: var(--secondary--color);
+}
