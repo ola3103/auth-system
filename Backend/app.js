@@ -3,15 +3,28 @@ require("express-async-errors");
 
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
+const authRouter = require("./routes/auth-routes");
 const notFoundMiddleware = require("./middleware/notFound-middleware");
 const errorHandlerMiddleware = require("./middleware/errorHandler-middleware");
 
 app.use(express.static("./public"));
+app.use(cors());
 
-app.get("/home", (req, res) => {
-  res.status(200).json({ msg: "Hello World" });
+app.get("/register", (req, res) => {
+  res.sendFile("./public/register.html", { root: __dirname });
 });
+
+app.get("/sign-in", (req, res) => {
+  res.sendFile("./public/sign-in.html", { root: __dirname });
+});
+
+app.get("/forgot-password", (req, res) => {
+  res.sendFile("./public/forgot-password.html", { root: __dirname });
+});
+
+app.use("/api/v1/auth", authRouter);
 
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);

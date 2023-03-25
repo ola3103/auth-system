@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+    <link rel="stylesheet" href="custom.css" />
+  </head>
+  <body>
+    <main class="user--home--page">
+      <section class="top--part">
+        <p class="user--name">Olakunle</p>
+        <a href="" class="logout--btn">Logout</a>
+      </section>
+      <div class="inpos--box">
+        <p class="user--inspo">Dear Olakunle Wonuola,</p>
+        <p class="inspo--message"></p>
+      </div>
+    </main>
+
+    <script src="https://unpkg.com/typed.js@2.0.132/dist/typed.umd.js"></script>
+    <script>
+      var typed = new Typed(".inspo--message", {
+        strings: [
+          "Believe in yourself and your abilities. You have the power to accomplish anything you set your mind to. Don't let fear or self-doubt hold you back from pursuing your dreams. Embrace challenges as opportunities for growth, and never give up on what truly matters to you. Remember, success is not a destination, but a journey.",
+          "Keep moving forward, stay focused, and keep pushing yourself to be the best version of yourself. Your hard work and determination will pay off, and you'll be amazed at what you can achieve. So go out there and make your dreams a reality. The world is waiting for you to shine!",
+        ],
+        typeSpeed: 30,
+        backSpeed: 10,
+        loop: true,
+      });
+    </script>
+  </body>
+</html>

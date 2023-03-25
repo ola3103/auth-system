@@ -341,11 +341,11 @@ SIGN IN
   color: rgba(255, 255, 255, 0.7);
   letter-spacing: 1.5px;
 }
-.forgot--password--text {
-  margin: 0.75rem 0;
+
+.forgot--password-btn {
+  display: block;
   text-align: center;
-}
-.forgot--password {
+  margin: 0.75rem 0;
   color: var(--secondary--color);
   font-size: 1.25rem;
   letter-spacing: 1.25px;
@@ -378,6 +378,7 @@ FORGOT PASSWORD
   flex-direction: column;
 }
 .reset--instruction {
+  color: var(--secondary--color);
   font-style: italic;
   font-size: 1.5rem;
   margin: 0 0 1.5rem 0;
