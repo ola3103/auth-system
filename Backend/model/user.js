@@ -12,10 +12,22 @@ const UserSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
+    validate: {
+      validator: validator.isEmail,
+      message: "Please provide valid email",
+    },
   },
   password: {
     type: String,
     required: true,
     minLength: 6,
   },
+  verificationToken: String,
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verified: Date,
 });
+
+module.exports = mongoose.model("User", UserSchema);

@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("express-async-errors");
+require("./connect/connectDB");
 
 const express = require("express");
 const app = express();
@@ -10,6 +11,7 @@ const notFoundMiddleware = require("./middleware/notFound-middleware");
 const errorHandlerMiddleware = require("./middleware/errorHandler-middleware");
 
 app.use(express.static("./public"));
+app.use(express.json());
 app.use(cors());
 
 app.get("/register", (req, res) => {

@@ -12,15 +12,28 @@
       <section class="register--overlay">
         <p class="create--text">Create Account</p>
         <section class="form--box">
-          <form class="form" action="">
-            <input class="register--input" type="text" placeholder="NAME" />
-            <input class="register--input" type="email" placeholder="EMAIL" />
+          <form class="form register-form" action="">
             <input
-              class="register--input"
+              class="register--input name-input"
+              type="text"
+              name="name"
+              placeholder="NAME"
+            />
+            <input
+              class="register--input email-input"
+              type="email"
+              name="email"
+              placeholder="EMAIL"
+            />
+            <input
+              class="register--input password-input"
               type="password"
+              name="password"
               placeholder="PASSWORD"
             />
-            <button class="create--account-btn">Create Account</button>
+            <button class="create--account-btn" type="submit">
+              Create Account
+            </button>
           </form>
           <p class="existing--account">
             Already have an account? <a href="/sign-in">Sign in</a>
@@ -28,5 +41,13 @@
         </section>
       </section>
     </main>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./main.js"></script>
   </body>
 </html>
