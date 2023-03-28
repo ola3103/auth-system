@@ -26,6 +26,10 @@ app.get("/forgot-password", (req, res) => {
   res.sendFile("./public/forgot-password.html", { root: __dirname });
 });
 
+app.get("/verify", (req, res) => {
+  res.sendFile("./public/verify-email.html", { root: __dirname });
+});
+
 app.use("/api/v1/auth", authRouter);
 
 app.use(errorHandlerMiddleware);

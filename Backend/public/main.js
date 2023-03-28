@@ -1,7 +1,7 @@
 const createBtn = document.querySelector(".create--account-btn");
-const nameInput = document.querySelector(".name-input").value;
-const emailInput = document.querySelector(".email-input").value;
-const passwordInput = document.querySelector(".password-input").value;
+const nameInput = document.querySelector(".name-input");
+const emailInput = document.querySelector(".email-input");
+const passwordInput = document.querySelector(".password-input");
 const registerForm = document.querySelector(".register-form");
 
 registerForm.addEventListener("submit", async (e) => {
@@ -9,11 +9,12 @@ registerForm.addEventListener("submit", async (e) => {
 
   try {
     await axios.post("/api/v1/auth/register", {
-      name: nameInput,
-      email: emailInput,
-      password: passwordInput,
+      name: nameInput.value,
+      email: emailInput.value,
+      password: passwordInput.value,
     });
-    console.log(nameInput, emailInput, passwordInput);
+    console.log(nameInput.value, emailInput.value, passwordInput.value);
+    window.location.href = "http://localhost:9000/verify";
   } catch (error) {
     console.log(error);
   }
