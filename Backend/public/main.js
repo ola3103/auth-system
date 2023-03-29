@@ -15,6 +15,13 @@ registerForm.addEventListener("submit", async (e) => {
     });
     console.log(nameInput.value, emailInput.value, passwordInput.value);
     window.location.href = "http://localhost:9000/verify";
+
+    await axios.post("/api/v1/auth/verify-email", null, {
+      params: {
+        email,
+        token,
+      },
+    });
   } catch (error) {
     console.log(error);
   }

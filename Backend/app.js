@@ -30,6 +30,12 @@ app.get("/verify", (req, res) => {
   res.sendFile("./public/verify-email.html", { root: __dirname });
 });
 
+app.get("/verify-email", (req, res) => {
+  res.sendFile("./public/email-verification-successful.html", {
+    root: __dirname,
+  });
+});
+
 app.use("/api/v1/auth", authRouter);
 
 app.use(errorHandlerMiddleware);

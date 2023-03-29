@@ -2,6 +2,8 @@ const BadRequestError = require("../errors/badRequest-error");
 const User = require("../model/user");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
+const AuthenticationError = require("../errors/authentication-error");
+const sendVerificationEmail = require("../utils/sendVerificationEmail");
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -15,13 +17,29 @@ const register = async (req, res) => {
   }
   const verificationToken = crypto.randomBytes(40).toString("hex");
   const user = await User.create({ name, email, password, verificationToken });
-  sendEmail({
-    to: user.email,
-    subject: "Email Verification",
-    html: `<h1> Hello ${user.name} </h1>`,
+
+  const origin = "localhost:9000";
+  await sendVerificationEmail({
+    email: user.email,
+    name: user.name,
+    origin,
+    verificationToken: user.verificationToken,
   });
-  res.send("register");
+  res
+    .status(201)
+    .json({
+      msg: " successful, please check your email to verify your account",
+    });
 };
+
+const verifyEmail = async (req, res) => {
+  const { email, verificationToken } = req.body;
+
+  if (!email || !verificationToken) {
+    throw new AuthenticationError("Invalid Credentials");
+  }
+};
+
 const signIn = async (req, res) => {
   res.send("sign in");
 };
@@ -29,4 +47,4 @@ const logOut = async (req, res) => {
   res.send("log out");
 };
 
-module.exports = { register, signIn, logOut };
+module.exports = { register, signIn, logOut, verifyEmail };
