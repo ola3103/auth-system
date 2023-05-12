@@ -5,6 +5,7 @@ require("./connect/connectDB");
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const axios = require("axios");
 
 const authRouter = require("./routes/auth-routes");
 const notFoundMiddleware = require("./middleware/notFound-middleware");
@@ -29,8 +30,24 @@ app.get("/forgot-password", (req, res) => {
 app.get("/verify", (req, res) => {
   res.sendFile("./public/verify-email.html", { root: __dirname });
 });
-
+async function postData(queryData) {
+  try {
+    const response = await axios.post(
+      "http://localhost:9000/api/v1/auth/verify-email",
+      {
+        data: queryData,
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
 app.get("/verify-email", (req, res) => {
+  const tokenEmail = {
+    tokenV: req.query.token,
+    emailV: req.query.email,
+  };
+  postData(tokenEmail);
   res.sendFile("./public/email-verification-successful.html", {
     root: __dirname,
   });
