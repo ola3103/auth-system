@@ -1,9 +1,11 @@
 const BadRequestError = require("../errors/badRequest-error");
 const User = require("../model/user");
+const Token = require("../model/token");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 const AuthenticationError = require("../errors/authentication-error");
 const sendVerificationEmail = require("../utils/sendVerificationEmail");
+const { attachCookiesToResponse } = require("../utils/jwt-setup");
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -64,7 +66,40 @@ const signIn = async (req, res) => {
     throw new AuthenticationError("Please provide a valid email or password");
   }
 
-  res.send("sign in");
+  if (!user.isVerified) {
+    throw new AuthenticationError("Please verify your email address");
+  }
+
+  const tokenUser = {
+    name: user.name,
+    email: user.email,
+    userId: user._id,
+  };
+  let refreshToken = "";
+
+  const existingToken = await Token.findOne({ user: user._id });
+
+  if (existingToken) {
+    const { isValid } = existingToken;
+    if (!isValid) {
+      throw new AuthenticationError("Invalid Credentials");
+    }
+    refreshToken = existingToken.refreshToken;
+    attachCookiesToResponse({ res, user: tokenUser, refreshToken });
+    res.status(200).json({ user: tokenUser, existingToken });
+    return;
+  }
+
+  refreshToken = crypto.randomBytes(40).toString("hex");
+  const userAgent = req.headers["user-agent"];
+  const ip = req.ip;
+  const userToken = { refreshToken, userAgent, ip, user: user._id };
+
+  await Token.create(userToken);
+
+  attachCookiesToResponse({ res, user: tokenUser, refreshToken });
+
+  res.status(200).json({ user: tokenUser });
 };
 const logOut = async (req, res) => {
   res.send("log out");
