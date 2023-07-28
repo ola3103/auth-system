@@ -7,8 +7,8 @@ const {
 const authenticationMiddleware = require("../middleware/authentication-middleware");
 const router = express.Router();
 
-router.get("/", authenticationMiddleware, dashboard);
-router.patch("/user/updateUser", updateUser);
-router.patch("user/updateUserPassword", updateUserPassword);
+router.get("/dashboard", authenticationMiddleware, dashboard);
+router.patch("/updateUser", updateUser);
+router.patch("/updateUserPassword", updateUserPassword);
 
 module.exports = router;

@@ -86,7 +86,7 @@ const signIn = async (req, res) => {
     }
     refreshToken = existingToken.refreshToken;
     attachCookiesToResponse({ res, user: tokenUser, refreshToken });
-    res.status(200).json({ user: tokenUser, existingToken });
+    res.status(200).json({ user: tokenUser });
     return;
   }
 

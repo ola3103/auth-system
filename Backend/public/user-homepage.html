@@ -8,17 +8,25 @@
     <link rel="stylesheet" href="custom.css" />
   </head>
   <body>
+    <main class="load--page"></main>
     <main class="user--home--page">
       <section class="top--part">
-        <p class="user--name">Olakunle</p>
+        <p class="user--name"></p>
         <a href="" class="logout--btn">Logout</a>
       </section>
       <div class="inpos--box">
-        <p class="user--inspo">Dear Olakunle Wonuola,</p>
+        <p class="user--inspo"></p>
         <p class="inspo--message"></p>
       </div>
     </main>
 
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="dashboard.js"></script>
     <script src="https://unpkg.com/typed.js@2.0.132/dist/typed.umd.js"></script>
     <script>
       var typed = new Typed(".inspo--message", {
