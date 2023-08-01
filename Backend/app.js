@@ -34,14 +34,11 @@ app.get("/verify", (req, res) => {
   res.sendFile("./public/verify-email.html", { root: __dirname });
 });
 
-async function postData(queryData) {
+async function postData(queryData, backendURL) {
   try {
-    const response = await axios.post(
-      "http://localhost:9000/api/v1/auth/verify-email",
-      {
-        data: queryData,
-      }
-    );
+    const response = await axios.post(backendURL, {
+      data: queryData,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -51,7 +48,8 @@ app.get("/verify-email", (req, res) => {
     tokenV: req.query.token,
     emailV: req.query.email,
   };
-  postData(tokenEmail);
+  const backendURL = "http://localhost:9000/api/v1/auth/verify-email";
+  postData(tokenEmail, backendURL);
   res.sendFile("./public/email-verification-successful.html", {
     root: __dirname,
   });
@@ -59,6 +57,25 @@ app.get("/verify-email", (req, res) => {
 app.get("/userdashboard", (req, res) => {
   res.sendFile("./public/user-homepage.html", { root: __dirname });
 });
+
+app.get("/checkEmailPasswordLink", (req, res) => {
+  res.sendFile("./public/check-email-passwordLink.html", { root: __dirname });
+});
+
+app.get("/passwordResetSuccessful", (req, res) => {
+  res.sendFile("./public/passwordResetSuccessful.html", { root: __dirname });
+});
+
+app.get("/reset-password", (req, res) => {
+  const resetPasswordQuery = {
+    email: req.query.email,
+    token: req.query.token,
+  };
+  const backendURL = "http://localhost:9000/api/v1/auth/reset-password";
+  postData(resetPasswordQuery, backendURL);
+  res.sendFile("./public/reset-password.html", { root: __dirname });
+});
+
 app.use("/api/v1/auth", authRouter);
 app.use("/user", userRouter);
 

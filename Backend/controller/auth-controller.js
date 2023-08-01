@@ -6,6 +6,8 @@ const sendEmail = require("../utils/sendEmail");
 const AuthenticationError = require("../errors/authentication-error");
 const sendVerificationEmail = require("../utils/sendVerificationEmail");
 const { attachCookiesToResponse } = require("../utils/jwt-setup");
+const sendResetPasswordLink = require("../utils/sendResetPasswordLink");
+const hashString = require("../utils/hashString");
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -33,7 +35,6 @@ const register = async (req, res) => {
 };
 
 const verifyEmail = async (req, res) => {
-  console.log(req.body);
   const { tokenV: verificationToken, emailV: email } = req.body.data;
   const user = await User.findOne({ email: email });
   if (!user) {
@@ -102,7 +103,76 @@ const signIn = async (req, res) => {
   res.status(200).json({ user: tokenUser });
 };
 const logOut = async (req, res) => {
+  await Token.findOneAndDelete({ user: req.user.userId });
+
+  res.cookie("accessToken", "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+
+  res.cookie("refreshToken", "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
   res.send("log out");
 };
 
-module.exports = { register, signIn, logOut, verifyEmail };
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    throw new BadRequestError("Kindly provid a email");
+  }
+  const user = await User.findOne({ email });
+  if (user) {
+    const passwordToken = crypto.randomBytes(70).toString("hex");
+    const origin = "http://localhost:9000";
+    sendResetPasswordLink({
+      name: user.name,
+      token: passwordToken,
+      origin,
+      email: user.email,
+    });
+
+    const tenMinutes = 1000 * 60 * 10;
+    const passwordTokenExpireDate = new Date(Date.now() + tenMinutes);
+
+    user.passwordTokenExpireDate = passwordTokenExpireDate;
+    user.passwordToken = hashString(passwordToken);
+
+    await user.save();
+  }
+  res.status(200).json({ msg: "check your email for reset password link" });
+};
+
+const resetPassword = async (req, res) => {
+  const { email, password, token } = req.body.data;
+  if (!email || !password || !token) {
+    throw new BadRequestError("Please provide all values");
+  }
+  const user = await User.findOne({ email });
+  if (user) {
+    const currentDate = new Date.now();
+
+    if (
+      user.passwordToken === hashString(token) &&
+      user.passwordTokenExpireDate > currentDate
+    ) {
+      user.password = password;
+      user.passwordToken = null;
+      user.passwordTokenExpireDate = null;
+
+      user.save();
+    }
+  }
+
+  res.status(200).json({ msg: "Password reset successful" });
+};
+
+module.exports = {
+  register,
+  signIn,
+  logOut,
+  verifyEmail,
+  forgotPassword,
+  resetPassword,
+};

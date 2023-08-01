@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingScreen.style.display = "none";
     mainContent.style.display = "block";
   }
-  setTimeout(showMainContent, 300);
+  setTimeout(showMainContent, 400);
 });
 
 const userName = document.querySelector(".user--name");
@@ -36,3 +36,16 @@ window.onload = function () {
     getDashboardInfo();
   }
 };
+
+const logoutBtn = document.querySelector(".logout--btn");
+
+logoutBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+  try {
+    console.log("log out");
+    await axios.delete("/api/v1/auth/logout");
+    window.location.href = "http://localhost:9000";
+  } catch (error) {
+    console.log(error);
+  }
+});
