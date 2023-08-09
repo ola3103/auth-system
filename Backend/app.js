@@ -67,12 +67,12 @@ app.get("/passwordResetSuccessful", (req, res) => {
 });
 
 app.get("/reset-password", (req, res) => {
-  const resetPasswordQuery = {
-    email: req.query.email,
-    token: req.query.token,
-  };
-  const backendURL = "http://localhost:9000/api/v1/auth/reset-password";
-  postData(resetPasswordQuery, backendURL);
+  // const resetPasswordQuery = {
+  //   email: req.query.email,
+  //   token: req.query.token,
+  // };
+  // const backendURL = "http://localhost:9000/api/v1/auth/reset-password";
+  // postData(resetPasswordQuery, backendURL);
   res.sendFile("./public/reset-password.html", { root: __dirname });
 });
 

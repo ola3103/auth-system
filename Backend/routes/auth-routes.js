@@ -7,6 +7,7 @@ const {
   verifyEmail,
   forgotPassword,
   resetPassword,
+  resetMainPassword,
 } = require("../controller/auth-controller");
 const authenticationMiddleware = require("../middleware/authentication-middleware");
 

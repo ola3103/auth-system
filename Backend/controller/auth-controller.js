@@ -120,7 +120,7 @@ const logOut = async (req, res) => {
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   if (!email) {
-    throw new BadRequestError("Kindly provid a email");
+    throw new BadRequestError("Kindly provide a email");
   }
   const user = await User.findOne({ email });
   if (user) {
@@ -137,7 +137,7 @@ const forgotPassword = async (req, res) => {
     const passwordTokenExpireDate = new Date(Date.now() + tenMinutes);
 
     user.passwordTokenExpireDate = passwordTokenExpireDate;
-    user.passwordToken = hashString(passwordToken);
+    user.passwordToken = passwordToken;
 
     await user.save();
   }
@@ -145,16 +145,17 @@ const forgotPassword = async (req, res) => {
 };
 
 const resetPassword = async (req, res) => {
-  const { email, password, token } = req.body.data;
-  if (!email || !password || !token) {
+  console.log(req.body);
+  const { email, token, password } = req.body;
+  if (!email || !token || !password) {
     throw new BadRequestError("Please provide all values");
   }
   const user = await User.findOne({ email });
   if (user) {
-    const currentDate = new Date.now();
+    const currentDate = new Date();
 
     if (
-      user.passwordToken === hashString(token) &&
+      user.passwordToken === token &&
       user.passwordTokenExpireDate > currentDate
     ) {
       user.password = password;
